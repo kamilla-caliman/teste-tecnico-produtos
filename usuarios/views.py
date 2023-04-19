@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from .models import User
 from .serializers import AccountSerializer
-import ipdb
 
 
 class CreateAccountView(generics.CreateAPIView):
