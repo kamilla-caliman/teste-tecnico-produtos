@@ -36,7 +36,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-THIRD_PARTY_APPS = ["rest_framework"]
+THIRD_PARTY_APPS = ["rest_framework", "rest_framework.authtoken"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -47,7 +47,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-MY_APPS = ["produtos", "categorias"]
+MY_APPS = ["produtos", "categorias", "usuarios"]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + MY_APPS
 
@@ -118,6 +118,18 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+AUTH_USER_MODEL = "usuarios.User"
+
+# Authentication Scheme
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ]
+}
 
 
 # Internationalization
