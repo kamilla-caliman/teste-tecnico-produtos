@@ -1,22 +1,22 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ProductSerializer
-from .models import Produto
-from categorias.models import Categoria
+from .models import Product
+from categories.models import Category
 from django.shortcuts import get_object_or_404
 
 
 class ProductView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
-    queryset = Produto.objects.all()
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
     def get_queryset(self):
-        category_params = self.request.query_params.get("categoria")
+        category_params = self.request.query_params.get("category")
 
         if category_params:
-            queryset = Produto.objects.filter(
-                categorias__nome__icontains=category_params
+            queryset = Product.objects.filter(
+                categories__name__icontains=category_params
             )
             return queryset
 
@@ -25,13 +25,13 @@ class ProductView(generics.ListCreateAPIView):
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
-    queryset = Produto.objects.all()
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
 class RemoveCategoryView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
-    queryset = Produto.objects.all()
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_url_kwarg = "product_id"
     lookup_field = "id"
@@ -40,9 +40,9 @@ class RemoveCategoryView(generics.UpdateAPIView):
         product_id = self.kwargs["product_id"]
         category_id = self.kwargs["category_id"]
 
-        category = get_object_or_404(Categoria, id=category_id)
-        product = get_object_or_404(Produto, id=product_id)
+        category = get_object_or_404(Category, id=category_id)
+        product = get_object_or_404(Product, id=product_id)
 
-        product.categorias.remove(category)
+        product.categories.remove(category)
 
         return super().get_queryset()

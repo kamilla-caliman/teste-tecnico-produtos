@@ -36,7 +36,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-MY_APPS = ["produtos", "categorias", "usuarios"]
+MY_APPS = ["products", "categories", "users"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -119,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = "usuarios.User"
+AUTH_USER_MODEL = "users.User"
 
 # Rest Framework settings for authentication, pagination and documentation
 
@@ -165,5 +165,3 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# AUTH_USER_MODEL = "usuarios.User"

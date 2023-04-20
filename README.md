@@ -1,6 +1,6 @@
 # Cadastro de Produtos e Categorias - API
 
-O usuário, quando autenticado, tem acesso ao catálogo de produtos e pode cadastrar, atualizar, deletar e listar os produtos e suas categorias. O usuário também tem a possibilidade de buscar produtos e categorias por id e filtrar a busca de produtos por categorias específicas usando queryparams ("/produtos?categoria=nome")
+O usuário, quando autenticado, tem acesso ao catálogo de produtos e pode cadastrar, atualizar, deletar e listar os produtos e suas categorias. O usuário também tem a possibilidade de buscar produtos e categorias por id e filtrar a busca de produtos por categorias específicas usando queryparams ("/products?category=nome")
 
 # Instruções de uso:
 
