@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Produto
 from categorias.models import Categoria
-from categorias.serializers import CategorySerializer
+from categorias.serializers import CategorySerializer, CategoryInProductsSerializer
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -41,7 +41,7 @@ class ProductSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    categorias = CategorySerializer(many=True)
+    categorias = CategoryInProductsSerializer(many=True)
 
     class Meta:
         model = Produto

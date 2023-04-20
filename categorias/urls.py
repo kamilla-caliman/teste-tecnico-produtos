@@ -1,7 +1,8 @@
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    path("categoria/"),  # ListCreate API
-    path("categoria/<pk>/"),  # Retrieve, Update and Delete Categoria API
-    path("categoria/<pk>/produtos/"),  # Listar produtos de uma categoria
+    path("categorias/", views.CategoryView.as_view()),
+    # path("categorias/<pk>/"),  # Retrieve, Update and Delete Categoria API
+    # path("categorias/<pk>/produtos/"),  # Listar produtos de uma categoria
 ]
