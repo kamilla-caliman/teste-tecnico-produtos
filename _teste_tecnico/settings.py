@@ -36,7 +36,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-THIRD_PARTY_APPS = ["rest_framework", "rest_framework.authtoken"]
+MY_APPS = ["produtos", "categorias", "usuarios"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -47,9 +47,9 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-MY_APPS = ["produtos", "categorias", "usuarios"]
+THIRD_PARTY_APPS = ["rest_framework", "rest_framework.authtoken", "drf_spectacular"]
 
-INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + MY_APPS
+INSTALLED_APPS = MY_APPS + DJANGO_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -121,14 +121,26 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = "usuarios.User"
 
-# Authentication Scheme
+# Rest Framework settings for authentication, pagination and documentation
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
-    ]
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 5,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+# Documentation settings
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Cadastro de produtos e categorias API",
+    "DESCRIPTION": "API feita para catálogo de produtos e categorias. O usuário, quando autenticado, tem acesso ao catálogo de produtos e pode cadastrar, atualizar, deletar e listar os produtos e suas categorias. O usuário também tem a possibilidade de buscar produtos e categorias por id e filtrar a busca de produtos por categorias específicas.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 
 
@@ -153,3 +165,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "usuarios.User"

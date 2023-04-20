@@ -11,7 +11,3 @@ class CategoryView(generics.ListCreateAPIView):
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     queryset = Categoria.objects.all()
-
-
-# class ProductsByCategoryView(generics.ListAPIView):
-#     ...
