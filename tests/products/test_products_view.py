@@ -15,6 +15,31 @@ class ProductViewTest(APITestCase):
         # UnitTest Longer Logs
         cls.maxDiff = None
 
+    def test_products_listing_pagination_without_token(self):
+        products_count = 10
+        create_multiple_products(products_count)
+
+        response = self.client.get(self.BASE_URL)
+
+        # STATUS CODE
+        with self.subTest():
+            expected_status_code = status.HTTP_401_UNAUTHORIZED
+            result_status_code = response.status_code
+            msg = (
+                "Verifique se o status code retornado do POST "
+                + f"em `{self.BASE_URL}` é {expected_status_code}"
+            )
+            self.assertEqual(expected_status_code, result_status_code, msg)
+
+        # RETORNO JSON
+        expected_data = {"detail": "Authentication credentials were not provided."}
+        resulted_data = response.json()
+        msg = (
+            "Verifique se a mensagem de retorno do POST sem token"
+            + f"em `{self.BASE_URL}` está correta."
+        )
+        self.assertDictEqual(expected_data, resulted_data, msg)
+
     def test_products_listing_pagination(self):
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.access_token)
 
@@ -108,7 +133,6 @@ class ProductViewTest(APITestCase):
             "created_at",
             "updated_at",
         }
-        # ipdb.set_trace()
         resulted_keys = set(resulted_data.keys())
         msg = (
             "Verifique se as informações retornadas no POST "
