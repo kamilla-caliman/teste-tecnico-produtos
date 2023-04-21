@@ -1,314 +1,492 @@
 openapi: 3.0.3
 info:
-  title: Cadastro de produtos e s API
+  title: Cadastro de produtos e categorias API
   version: 1.0.0
-  description: API feita para catálogo de produtos e s. O usuário, quando
+  description: API feita para catálogo de produtos e categorias. O usuário, quando
     autenticado, tem acesso ao catálogo de produtos e pode cadastrar, atualizar, deletar
-    e listar os produtos e suas s. O usuário também tem a possibilidade de
-    buscar produtos e s por id e filtrar a busca de produtos por s
+    e listar os produtos e suas categorias. O usuário também tem a possibilidade de
+    buscar produtos e categorias por id e filtrar a busca de produtos por categorias
     específicas.
 paths:
-  /api/s/:
+  /api/categories/:
     get:
-      operationId: api_s_list
+      operationId: categories_list
       parameters:
-        - name: page
-          required: false
-          in: query
-          description: A page number within the paginated result set.
-          schema:
-            type: integer
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
       tags:
-        - api
+      - categories
       security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-        - {}
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PaginatedCategoryList"
-          description: ""
+                $ref: '#/components/schemas/PaginatedCategoryList'
+          description: ''
     post:
-      operationId: api_s_create
+      operationId: categories_create
       tags:
-        - api
+      - categories
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Category"
+              $ref: '#/components/schemas/Category'
           application/x-www-form-urlencoded:
             schema:
-              $ref: "#/components/schemas/Category"
+              $ref: '#/components/schemas/Category'
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/Category"
+              $ref: '#/components/schemas/Category'
         required: true
       security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-        - {}
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
-        "201":
+        '201':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Category"
-          description: ""
-  /api/produtos/:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/categories/{id}/:
     get:
-      operationId: api_produtos_list
+      operationId: categories_retrieve
       parameters:
-        - name: page
-          required: false
-          in: query
-          description: A page number within the paginated result set.
-          schema:
-            type: integer
-      tags:
-        - api
-      security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-        - {}
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PaginatedProductList"
-          description: ""
-    post:
-      operationId: api_produtos_create
-      tags:
-        - api
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Product"
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: "#/components/schemas/Product"
-          multipart/form-data:
-            schema:
-              $ref: "#/components/schemas/Product"
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
         required: true
-      security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-        - {}
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Product"
-          description: ""
-  /api/produtos/{id}/:
-    get:
-      operationId: api_produtos_retrieve
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          description: A unique integer value identifying this produto.
-          required: true
       tags:
-        - api
+      - categories
       security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-        - {}
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Product"
-          description: ""
+                $ref: '#/components/schemas/Category'
+          description: ''
     put:
-      operationId: api_produtos_update
+      operationId: categories_update
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          description: A unique integer value identifying this produto.
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
       tags:
-        - api
+      - categories
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Product"
+              $ref: '#/components/schemas/Category'
           application/x-www-form-urlencoded:
             schema:
-              $ref: "#/components/schemas/Product"
+              $ref: '#/components/schemas/Category'
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/Product"
+              $ref: '#/components/schemas/Category'
         required: true
       security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-        - {}
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Product"
-          description: ""
+                $ref: '#/components/schemas/Category'
+          description: ''
     patch:
-      operationId: api_produtos_partial_update
+      operationId: categories_partial_update
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          description: A unique integer value identifying this produto.
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
       tags:
-        - api
+      - categories
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PatchedProduct"
+              $ref: '#/components/schemas/PatchedCategory'
           application/x-www-form-urlencoded:
             schema:
-              $ref: "#/components/schemas/PatchedProduct"
+              $ref: '#/components/schemas/PatchedCategory'
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/PatchedProduct"
+              $ref: '#/components/schemas/PatchedCategory'
       security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-        - {}
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Product"
-          description: ""
+                $ref: '#/components/schemas/Category'
+          description: ''
     delete:
-      operationId: api_produtos_destroy
+      operationId: categories_destroy
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          description: A unique integer value identifying this produto.
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
       tags:
-        - api
+      - categories
       security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-        - {}
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
-        "204":
+        '204':
           description: No response body
+  /api/products/:
+    get:
+      operationId: products_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - products
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductList'
+          description: ''
+    post:
+      operationId: products_create
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+  /api/products/{id}/:
+    get:
+      operationId: products_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - products
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    put:
+      operationId: products_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    patch:
+      operationId: products_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    delete:
+      operationId: products_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - products
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/products/{product_id}/category/{category_id}/:
+    put:
+      operationId: products_category_update
+      parameters:
+      - in: path
+        name: category_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: product_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    patch:
+      operationId: products_category_partial_update
+      parameters:
+      - in: path
+        name: category_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: product_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
   /api/users/:
     post:
-      operationId: api_users_create
+      operationId: users_create
       tags:
-        - api
+      - users
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Account"
+              $ref: '#/components/schemas/Account'
           application/x-www-form-urlencoded:
             schema:
-              $ref: "#/components/schemas/Account"
+              $ref: '#/components/schemas/Account'
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/Account"
+              $ref: '#/components/schemas/Account'
         required: true
       security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-        - {}
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
       responses:
-        "201":
+        '201':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Account"
-          description: ""
+                $ref: '#/components/schemas/Account'
+          description: ''
   /api/users/login/:
     post:
-      operationId: api_users_login_create
+      operationId: users_login_create
       tags:
-        - api
+      - users
       requestBody:
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: "#/components/schemas/AuthToken"
+              $ref: '#/components/schemas/AuthToken'
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/AuthToken"
+              $ref: '#/components/schemas/AuthToken'
           application/json:
             schema:
-              $ref: "#/components/schemas/AuthToken"
+              $ref: '#/components/schemas/AuthToken'
         required: true
       security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthToken"
-          description: ""
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
   /api/users/logout/:
     post:
-      operationId: api_users_logout_create
+      operationId: users_logout_create
       tags:
-        - api
+      - users
       requestBody:
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: "#/components/schemas/AuthToken"
+              $ref: '#/components/schemas/AuthToken'
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/AuthToken"
+              $ref: '#/components/schemas/AuthToken'
           application/json:
             schema:
-              $ref: "#/components/schemas/AuthToken"
+              $ref: '#/components/schemas/AuthToken'
         required: true
       security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthToken"
-          description: ""
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
 components:
   schemas:
     Account:
@@ -322,8 +500,7 @@ components:
           maxLength: 225
         username:
           type: string
-          description:
-            Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
@@ -337,11 +514,11 @@ components:
           writeOnly: true
           maxLength: 128
       required:
-        - email
-        - id
-        - nome
-        - password
-        - username
+      - email
+      - id
+      - nome
+      - password
+      - username
     AuthToken:
       type: object
       properties:
@@ -355,65 +532,69 @@ components:
           type: string
           readOnly: true
       required:
-        - password
-        - token
-        - username
+      - password
+      - token
+      - username
     Category:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        nome:
+        name:
           type: string
           maxLength: 225
-        produtos:
+        products:
           type: array
           items:
-            $ref: "#/components/schemas/Nested"
+            $ref: '#/components/schemas/Nested'
           readOnly: true
       required:
-        - id
-        - nome
-        - produtos
+      - id
+      - name
+      - products
     CategoryInProducts:
       type: object
       properties:
-        nome:
+        id:
+          type: integer
+          readOnly: true
+        name:
           type: string
           maxLength: 225
       required:
-        - nome
+      - id
+      - name
     Nested:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        nome:
+        name:
           type: string
           maxLength: 225
-        descricao:
+        description:
           type: string
-        preco:
+        price:
           type: string
           format: decimal
           pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
-        data_cadastro:
+        created_at:
           type: string
           format: date
           readOnly: true
-        data_atualizacao:
+        updated_at:
           type: string
           format: date
           readOnly: true
       required:
-        - data_atualizacao
-        - data_cadastro
-        - descricao
-        - id
-        - nome
-        - preco
+      - created_at
+      - description
+      - id
+      - name
+      - price
+      - updated_at
     PaginatedCategoryList:
       type: object
       properties:
@@ -433,7 +614,7 @@ components:
         results:
           type: array
           items:
-            $ref: "#/components/schemas/Category"
+            $ref: '#/components/schemas/Category'
     PaginatedProductList:
       type: object
       properties:
@@ -453,31 +634,45 @@ components:
         results:
           type: array
           items:
-            $ref: "#/components/schemas/Product"
+            $ref: '#/components/schemas/Product'
+    PatchedCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 225
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nested'
+          readOnly: true
     PatchedProduct:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        nome:
+        name:
           type: string
           maxLength: 225
-        descricao:
+        description:
           type: string
-        preco:
+        price:
           type: string
           format: decimal
           pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
-        s:
+        categories:
           type: array
           items:
-            $ref: "#/components/schemas/CategoryInProducts"
-        data_cadastro:
+            $ref: '#/components/schemas/CategoryInProducts'
+        created_at:
           type: string
           format: date
           readOnly: true
-        data_atualizacao:
+        updated_at:
           type: string
           format: date
           readOnly: true
@@ -487,35 +682,35 @@ components:
         id:
           type: integer
           readOnly: true
-        nome:
+        name:
           type: string
           maxLength: 225
-        descricao:
+        description:
           type: string
-        preco:
+        price:
           type: string
           format: decimal
           pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
-        s:
+        categories:
           type: array
           items:
-            $ref: "#/components/schemas/CategoryInProducts"
-        data_cadastro:
+            $ref: '#/components/schemas/CategoryInProducts'
+        created_at:
           type: string
           format: date
           readOnly: true
-        data_atualizacao:
+        updated_at:
           type: string
           format: date
           readOnly: true
       required:
-        - s
-        - data_atualizacao
-        - data_cadastro
-        - descricao
-        - id
-        - nome
-        - preco
+      - categories
+      - created_at
+      - description
+      - id
+      - name
+      - price
+      - updated_at
   securitySchemes:
     basicAuth:
       type: http
