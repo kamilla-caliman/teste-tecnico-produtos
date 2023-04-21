@@ -60,7 +60,7 @@ class CategoryViewTest(APITestCase):
         msg = "Verifique se a paginação está retornando cinco items de cada vez"
         self.assertEqual(expected_len, results_len, msg)
 
-    def test_product_creation_without_required_fields(self):
+    def test_category_creation_without_required_fields(self):
         self.client.credentials(HTTP_AUTHORIZATION="Token " + str(self.access_token))
         response = self.client.post(self.BASE_URL, data={}, format="json")
 

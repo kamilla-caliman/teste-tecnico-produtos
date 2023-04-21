@@ -11,3 +11,10 @@ def create_multiple_categories(category_count: int) -> QuerySet[Category]:
     categories = Category.objects.bulk_create(category_objects)
 
     return categories
+
+
+def create_category() -> Category:
+    category_data = {"name": "Category test"}
+
+    category = Category.objects.create(**category_data)
+    return category
