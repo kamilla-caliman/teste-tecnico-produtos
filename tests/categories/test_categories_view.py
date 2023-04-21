@@ -1,22 +1,23 @@
 from rest_framework.test import APITestCase
 from rest_framework.views import status
 from tests.factories.user_factories import create_user_with_token
-from tests.factories.products_factories import create_multiple_products
+from tests.factories.categories_factories import create_multiple_categories
+from categories.models import Category
 
 
-class ProductViewTest(APITestCase):
+class CategoryViewTest(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.BASE_URL = "/api/products/"
+        cls.BASE_URL = "/api/categories/"
         cls.user, token = create_user_with_token()
         cls.access_token = str(token.key)
 
         # UnitTest Longer Logs
         cls.maxDiff = None
 
-    def test_products_listing_pagination_without_token(self):
-        products_count = 10
-        create_multiple_products(products_count)
+    def test_categories_listing_pagination_without_token(self):
+        categories_count = 10
+        create_multiple_categories(categories_count)
 
         response = self.client.get(self.BASE_URL)
 
@@ -39,15 +40,15 @@ class ProductViewTest(APITestCase):
         )
         self.assertDictEqual(expected_data, resulted_data, msg)
 
-    def test_products_listing_pagination(self):
-        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.access_token)
+    def test_categories_listing_pagination(self):
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + str(self.access_token))
 
-        products_count = 10
-        create_multiple_products(products_count)
+        categories_count = 10
+        create_multiple_categories(categories_count)
 
         response = self.client.get(self.BASE_URL)
         resulted_data = response.json()
-        # ipdb.set_trace()
+
         resulted_pagination_keys = set(resulted_data.keys())
         expected_pagination_keys = {"count", "next", "previous", "results"}
         msg = "Verifique se a paginação está sendo feita corretamente"
@@ -75,12 +76,12 @@ class ProductViewTest(APITestCase):
 
         # RETORNO JSON
         resulted_data: dict = response.json()
-        expected_fields = {"name", "price", "description", "categories"}
+        expected_fields = {"name"}
         returned_fields = set(resulted_data.keys())
-        msg = "Verifique se todas as chaves obrigatórias são retornadas ao tentar criar um produto sem dados"
+        msg = "Verifique se todas as chaves obrigatórias são retornadas ao tentar criar uma categoria sem dados"
         self.assertSetEqual(expected_fields, returned_fields, msg)
 
-    def test_product_creation_without_token(self):
+    def test_category_creation_without_token(self):
         # STATUS CODE
         with self.subTest():
             response = self.client.post(self.BASE_URL, data={}, format="json")
@@ -101,15 +102,10 @@ class ProductViewTest(APITestCase):
         )
         self.assertDictEqual(expected_data, resulted_data, msg)
 
-    def test_product_creation_with_valid_token(self):
-        product_data = {
-            "name": "Product Test",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-            "price": 10.80,
-            "categories": [{"name": "Category Test"}],
-        }
+    def test_category_creation_with_valid_token(self):
+        category_data = {"name": "Category Test"}
         self.client.credentials(HTTP_AUTHORIZATION="Token " + str(self.access_token))
-        response = self.client.post(self.BASE_URL, data=product_data, format="json")
+        response = self.client.post(self.BASE_URL, data=category_data, format="json")
         resulted_data = response.json()
 
         # STATUS CODE
@@ -123,18 +119,16 @@ class ProductViewTest(APITestCase):
             self.assertEqual(expected_status_code, result_status_code, msg)
 
         # RETORNO JSON
-        expected_keys = {
-            "id",
-            "name",
-            "description",
-            "price",
-            "categories",
-            "created_at",
-            "updated_at",
+        added_category = Category.objects.last()
+        expected_data = {
+            "id": added_category.pk,
+            "name": category_data["name"],
+            "products": [],
         }
-        resulted_keys = set(resulted_data.keys())
+
+        resulted_data = response.json()
         msg = (
-            "Verifique se as informações retornadas no POST "
-            + f"em `{self.BASE_URL}` estão corretas."
+            "Verifique se os dados retornados do POST com o token"
+            + f" em {self.BASE_URL} é {expected_data}"
         )
-        self.assertSetEqual(expected_keys, resulted_keys, msg)
+        self.assertDictEqual(expected_data, resulted_data, msg)
