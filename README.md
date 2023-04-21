@@ -10,11 +10,11 @@ O usuário, quando autenticado, tem acesso ao catálogo de produtos e pode cadas
 
 ```
 SECRET_KEY='secret key da sua aplicação'
-POSTGRES_DB='client_register'
+POSTGRES_DB='teste_tecnico'
 POSTGRES_USER='nome do usuário'
 POSTGRES_PASSWORD='senha do usuário'
 POSTGRES_PORT='porta do servidor'
-POSTGRES_DB_HOST='client_register_db'
+POSTGRES_DB_HOST='teste_tecnico_db'
 DEBUG=True
 ```
 

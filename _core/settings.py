@@ -138,7 +138,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Cadastro de produtos e categorias API",
-    "DESCRIPTION": "API feita para catálogo de produtos e categorias. O usuário, quando autenticado, tem acesso ao catálogo de produtos e pode cadastrar, atualizar, deletar e listar os produtos e suas categorias. O usuário também tem a possibilidade de buscar produtos e categorias por id e filtrar a busca de produtos por categorias específicas.",
+    "DESCRIPTION": "API feita para catálogo de produtos e categorias. O usuário, quando autenticado, tem acesso ao catálogo de produtos e pode cadastrar, atualizar, deletar e listar os produtos e suas categorias. O usuário também tem a possibilidade de buscar produtos e categorias por id e filtrar a busca de produtos por categorias específicas usando queryparams (/products?category=nome).",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
